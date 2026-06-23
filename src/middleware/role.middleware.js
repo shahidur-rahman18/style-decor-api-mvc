@@ -1,5 +1,7 @@
-const createVerifyAdmin = (usersCollection) => async (req, res, next) => {
-  const user = await usersCollection.findOne({ email: req.tokenEmail });
+const User = require("../models/User.model");
+
+const verifyAdmin = async (req, res, next) => {
+  const user = await User.findOne({ email: req.tokenEmail }).lean();
   if (user?.role !== "admin") {
     return res
       .status(403)
@@ -8,8 +10,8 @@ const createVerifyAdmin = (usersCollection) => async (req, res, next) => {
   next();
 };
 
-const createVerifySeller = (usersCollection) => async (req, res, next) => {
-  const user = await usersCollection.findOne({ email: req.tokenEmail });
+const verifySeller = async (req, res, next) => {
+  const user = await User.findOne({ email: req.tokenEmail }).lean();
   if (user?.role !== "seller") {
     return res
       .status(403)
@@ -18,4 +20,4 @@ const createVerifySeller = (usersCollection) => async (req, res, next) => {
   next();
 };
 
-module.exports = { createVerifyAdmin, createVerifySeller };
+module.exports = { verifyAdmin, verifySeller };

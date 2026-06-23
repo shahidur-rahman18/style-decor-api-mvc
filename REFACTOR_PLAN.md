@@ -1,10 +1,22 @@
 # Style-Decor Backend — Professional Refactor Plan
 
 > **লক্ষ্য:** বর্তমান single-file (`index.js`) backend কে industry-standard **Express + Mongoose + MVC (Layered Architecture)** এ রূপান্তর করা।  
-> **স্ট্যাটাস:** Planning Document — Implementation এখনো শুরু হয়নি  
+> **স্ট্যাটাস:** Phase 0 ✅ | Phase 1 ✅ | Phase 2 ✅ | Phase 3 ✅ | Phase 4 ✅ | Phase 5 ✅ | Phase 6 → পরের ধাপ  
 > **তারিখ:** জুন ২০২৬
 
 ---
+
+## Progress
+
+| Phase | Status | Output |
+|-------|--------|--------|
+| **0** Preparation | ✅ Done | `index.legacy.js`, `API_CONTRACT.md`, `.env.example`, branch `refactor/mvc-mongoose` |
+| **1** Foundation | ✅ Done | `src/` skeleton, config, middleware, utils, `vercel.json` → `src/index.js` |
+| **2** Mongoose | ✅ Done | `mongoose`, `database.js`, 4 models |
+| **3** User module | ✅ Done | user routes → MVC |
+| **4** Service module | ✅ Done | service routes → MVC |
+| **5** Payment + Order | ✅ Done | payment + order routes → MVC |
+| **6–9** | Pending | — |
 
 ## সূচিপত্র
 
@@ -373,12 +385,12 @@ Refactor করার সময় এই issues গুলো ঠিক কর�
 
 **কাজ:** Native MongoDB driver → Mongoose
 
-- [ ] `mongoose` install
-- [ ] `config/database.js` — `mongoose.connect()` with options
-- [ ] ৪টা Model তৈরি: User, Service, Order, DecoratorRequest
-- [ ] Existing DB data-র সাথে schema match verify (field names same রাখতে হবে)
-- [ ] Indexes add: `User.email`, `Order.transactionId`, `DecoratorRequest.email`
-- [ ] Vercel serverless-এ connection reuse pattern implement
+- [x] `mongoose` install
+- [x] `config/database.js` — `mongoose.connect()` with options
+- [x] ৪টা Model তৈরি: User, Service, Order, DecoratorRequest
+- [x] Existing DB data-র সাথে schema match verify (field names same রাখা হয়েছে)
+- [x] Indexes add: `User.email`, `Order.transactionId`, `DecoratorRequest.email`
+- [x] Vercel serverless-এ connection reuse pattern implement
 
 **Test:** Models দিয়ে manual read/write — existing data ঠিক আসে কিনা
 
