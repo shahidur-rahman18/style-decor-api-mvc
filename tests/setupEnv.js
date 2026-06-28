@@ -9,3 +9,8 @@ process.env.FB_SERVICE_KEY = Buffer.from(
   })
 ).toString("base64");
 process.env.CLIENT_DOMAIN = "http://localhost:5173";
+process.env.JWT_ACCESS_SECRET = "test-jwt-access-secret-for-unit-tests-only";
+process.env.ACCESS_TOKEN_EXPIRY = "15m";
+process.env.REFRESH_TOKEN_EXPIRY_DAYS = "7";
+process.env.COOKIE_DOMAIN = "localhost";
+process.env.NODE_ENV = "test";
