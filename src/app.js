@@ -8,6 +8,7 @@ const connectDB = require("./config/database");
 const notFoundHandler = require("./middleware/notFound.middleware");
 const errorHandler = require("./middleware/error.middleware");
 const { authLimiter } = require("./middleware/rateLimit.middleware");
+const authRoutes = require("./auth/auth.routes");
 const userRoutes = require("./routes/user.routes");
 const serviceRoutes = require("./routes/service.routes");
 const paymentRoutes = require("./routes/payment.routes");
@@ -54,6 +55,7 @@ const createApp = () => {
     });
   });
 
+  app.use(authRoutes);
   app.use(userRoutes);
   app.use(serviceRoutes);
   app.use(paymentRoutes);

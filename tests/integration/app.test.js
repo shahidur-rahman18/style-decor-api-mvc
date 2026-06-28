@@ -41,11 +41,12 @@ describe("API smoke tests", () => {
     expect(res.body).toEqual([{ name: "Test Plant", price: 10 }]);
   });
 
-  test("POST /user rejects invalid body", async () => {
-    const res = await request(app).post("/user").send({ name: "only-name" });
+  test("POST /user removed — use /auth/register or /auth/firebase-sync", async () => {
+    const res = await request(app)
+      .post("/user")
+      .send({ name: "Test", email: "test@example.com" });
 
-    expect(res.status).toBe(400);
-    expect(res.body.message).toBeTruthy();
+    expect(res.status).toBe(404);
   });
 
   test("POST /become-decorator requires auth", async () => {

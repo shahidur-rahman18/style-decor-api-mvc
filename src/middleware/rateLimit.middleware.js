@@ -8,4 +8,12 @@ const authLimiter = rateLimit({
   message: { message: "Too many requests, try again later." },
 });
 
-module.exports = { authLimiter };
+const authStrictLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 10,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { message: "Too many auth attempts, try again later." },
+});
+
+module.exports = { authLimiter, authStrictLimiter };

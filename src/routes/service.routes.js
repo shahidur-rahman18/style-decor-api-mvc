@@ -25,7 +25,7 @@ router.patch(
 );
 router.delete("/services/:id", verifyJWT, verifySeller, serviceController.remove);
 router.get(
-  "/my-inventory/:email",
+  "/my-inventory",
   verifyJWT,
   verifySeller,
   serviceController.getInventory

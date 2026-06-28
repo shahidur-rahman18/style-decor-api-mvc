@@ -9,7 +9,7 @@ const router = express.Router();
 
 router.get("/my-orders", verifyJWT, orderController.getMyOrders);
 router.get(
-  "/manage-orders/:email",
+  "/manage-orders",
   verifyJWT,
   verifySeller,
   orderController.getManageOrders
