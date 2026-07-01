@@ -1,9 +1,11 @@
+const path = require("path");
 const express = require("express");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const helmet = require("helmet");
 const mongoose = require("mongoose");
 const { clientDomain } = require("./config/env");
+const { renderApiDocsPage } = require("./views/apiDocsPage");
 const connectDB = require("./config/database");
 const notFoundHandler = require("./middleware/notFound.middleware");
 const errorHandler = require("./middleware/error.middleware");
@@ -38,12 +40,26 @@ const createApp = () => {
       optionSuccessStatus: 200,
     })
   );
-  app.use(helmet());
+  app.use(
+    helmet({
+      contentSecurityPolicy: {
+        directives: {
+          defaultSrc: ["'self'"],
+          styleSrc: ["'self'", "https://fonts.googleapis.com"],
+          fontSrc: ["'self'", "https://fonts.gstatic.com"],
+          scriptSrc: ["'self'"],
+          connectSrc: ["'self'"],
+        },
+      },
+    })
+  );
   app.use(cookieParser());
   app.use(express.json());
+  app.use(express.static(path.join(__dirname, "../public")));
 
   app.get("/", (req, res) => {
-    res.send("Hello from Server..");
+    const baseUrl = `${req.protocol}://${req.get("host")}`;
+    res.type("html").send(renderApiDocsPage(baseUrl));
   });
 
   app.get("/health", (req, res) => {

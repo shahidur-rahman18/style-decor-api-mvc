@@ -20,11 +20,14 @@ const createApp = require("../../src/app");
 describe("API smoke tests", () => {
   const app = createApp();
 
-  test("GET / returns health message", async () => {
+  test("GET / returns API docs page", async () => {
     const res = await request(app).get("/");
 
     expect(res.status).toBe(200);
-    expect(res.text).toBe("Hello from Server..");
+    expect(res.headers["content-type"]).toMatch(/html/);
+    expect(res.text).toContain("Style Decor API");
+    expect(res.text).toContain("/auth/login");
+    expect(res.text).toContain("/services");
   });
 
   test("GET /health reports db status", async () => {
