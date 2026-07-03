@@ -26,7 +26,7 @@ const orderSchema = new mongoose.Schema(
     price: Number,
     image: String,
   },
-  { collection: "orders", strict: false }
+  { collection: "orders", strict: false, timestamps: true }
 );
 
 module.exports = mongoose.model("Order", orderSchema);

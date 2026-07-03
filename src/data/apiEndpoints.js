@@ -267,6 +267,31 @@ const apiEndpoints = [
       },
     ],
   },
+  {
+    group: "Dashboard",
+    description: "Role-based KPI stats and analytics chart data",
+    endpoints: [
+      {
+        method: "GET",
+        path: "/dashboard/stats",
+        auth: "Bearer JWT",
+        description:
+          "Role-based dashboard KPIs (admin / seller / customer response shapes differ)",
+        response: "200 { success, role, data }",
+        tryable: false,
+      },
+      {
+        method: "GET",
+        path: "/dashboard/analytics",
+        auth: "Bearer JWT",
+        description:
+          "Chart data scoped by role. Query: period=7d|30d|90d|1y (default 30d)",
+        response:
+          "200 { success, role, data: { monthlyRevenue, monthlyBookings, categoryBreakdown, statusBreakdown } }",
+        tryable: false,
+      },
+    ],
+  },
 ];
 
 module.exports = apiEndpoints;

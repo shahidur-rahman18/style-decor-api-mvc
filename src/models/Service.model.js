@@ -19,7 +19,7 @@ const serviceSchema = new mongoose.Schema(
     quantity: Number,
     seller: sellerSchema,
   },
-  { collection: "services", strict: false }
+  { collection: "services", strict: false, timestamps: true }
 );
 
 module.exports = mongoose.model("Service", serviceSchema);

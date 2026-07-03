@@ -16,6 +16,7 @@ const serviceRoutes = require("./routes/service.routes");
 const paymentRoutes = require("./routes/payment.routes");
 const orderRoutes = require("./routes/order.routes");
 const decoratorRoutes = require("./routes/decorator.routes");
+const dashboardRoutes = require("./routes/dashboard.routes");
 
 const createApp = () => {
   const app = express();
@@ -77,6 +78,7 @@ const createApp = () => {
   app.use(paymentRoutes);
   app.use(orderRoutes);
   app.use(decoratorRoutes);
+  app.use(dashboardRoutes);
 
   app.use(notFoundHandler);
   app.use(errorHandler);

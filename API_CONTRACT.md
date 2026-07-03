@@ -75,6 +75,39 @@
 | PATCH | `/update-role` | JWT + Admin | Mongo update result | `UpdateUserRoleModal.jsx` |
 | POST | `/become-decorator` | JWT | Mongo insert result | `BecomeSellerModal.jsx` |
 | GET | `/decorator-requests` | JWT + Admin | `DecoratorRequest[]` | `SellerRequests.jsx` |
+| GET | `/dashboard/stats` | JWT | `{ success, role, data }` (role-shaped KPIs) | Dashboard Statistics |
+| GET | `/dashboard/analytics` | JWT | `{ success, role, data }` (chart series) | Dashboard Analytics |
+
+### Dashboard response shapes
+
+**`GET /dashboard/stats`** — response always `{ success: true, role, data }`.
+
+| Role | `data` fields |
+|------|----------------|
+| `admin` | `totalRevenue`, `totalOrders`, `totalServices`, `totalUsers`, `pendingOrders`, `pendingDecoratorRequests`, `revenueGrowth`, `ordersGrowth`, `recentOrders` |
+| `seller` | `myRevenue`, `myTotalOrders`, `myServices`, `pendingOrders`, `revenueGrowth`, `ordersGrowth`, `recentOrders` |
+| `customer` | `totalSpent`, `totalOrders`, `pendingOrders`, `deliveredOrders`, `spendingGrowth`, `recentOrders` |
+
+Growth fields are integers (percent vs previous calendar month). `recentOrders` is the last 5 orders for that scope.
+
+**`GET /dashboard/analytics?period=30d`**
+
+| Query | Values | Default |
+|-------|--------|---------|
+| `period` | `7d`, `30d`, `90d`, `1y` | `30d` |
+
+`data` always:
+
+| Field | Shape |
+|-------|--------|
+| `monthlyRevenue` | `[{ year, month, revenue }]` |
+| `monthlyBookings` | `[{ year, month, bookings }]` |
+| `categoryBreakdown` | `[{ category, count }]` |
+| `statusBreakdown` | `[{ status, count }]` |
+
+Scope: admin = all orders; seller = `seller.email === token email`; customer = `customer === token email`.
+
+Order `status` values in DB: `pending`, `processing`, `delivered`, `cancelled`.
 
 ### Removed (B8)
 
@@ -100,7 +133,8 @@
 ## Known Gaps
 
 - Response format inconsistent (raw Mongo results vs `{ role }` vs `{ url }`)
-- Frontend still calls old URLs and `POST /user` — fix in F4/F6
+- Frontend still calls old URLs (`/my-inventory/:email`, `/manage-orders/:email`) — use token-based paths above
+- Older orders may lack `createdAt`; stats/analytics date filters use ObjectId timestamp as fallback
 
 ---
 
